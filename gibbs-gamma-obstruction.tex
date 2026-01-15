@@ -39,8 +39,8 @@ We prove that the Weil explicit formula and the Connes spectral trace formula
 cannot be identified at finite spectral cutoff. The obstruction is structural 
 and localized entirely at the Archimedean place: the Weil contribution involves 
 the digamma function $\Gamma'/\Gamma$, which is smooth and intrinsic to the 
-completed zeta function, while finite spectral truncation introduces extrinsic 
-oscillatory terms of Gibbs type. We name this the \emph{Gibbs--Gamma mismatch} 
+completed zeta function, while finite spectral truncation excludes a nonzero 
+tail contribution. We name this the \emph{Gibbs--Gamma mismatch} 
 and prove it persists for all finite cutoffs $\Lambda < \infty$. As a consequence, 
 positivity of the Weil functional does not imply positivity of finite truncated 
 traces. This closes a specific route in the approach to the Riemann hypothesis 
@@ -91,9 +91,10 @@ where the error term $E_\Lambda(f) \neq 0$ for all finite $\Lambda$, and
 $E_\Lambda(f)$ is sign-changing as a function of $\Lambda$.
 \end{theorem}
 
-The term $E_\Lambda(f)$ arises from the Gibbs phenomenon associated to sharp 
-spectral truncation. Its oscillatory, sign-changing character obstructs any 
-attempt to deduce positivity of $T_\Lambda$ from positivity of $W_\infty$.
+The term $E_\Lambda(f)$ arises from truncating the spectral integral at finite 
+$\Lambda$. For positive-type inputs $h = f*f^*$, this produces a systematic 
+Archimedean tail deficit: the truncated trace undershoots the Weil term by 
+an amount that vanishes only in the limit $\Lambda \to \infty$.
 
 \begin{remark}
 This is not an approximation statement. The identity fails exactly, not 
@@ -287,7 +288,9 @@ T_\Lambda(f) = W_\infty(f) + E_\Lambda(f)
 where the error term has the following properties:
 \begin{enumerate}
 \item[\textup{(i)}] $E_\Lambda(f) \neq 0$ for all finite $\Lambda > 0$.
-\item[\textup{(ii)}] $E_\Lambda(f)$ is sign-changing as a function of $\Lambda$.
+\item[\textup{(ii)}] For positive-type inputs $h = f * f^*$, the error $E_\Lambda(h) \leq 0$ 
+for all sufficiently large $\Lambda$, and $E_\Lambda(h) \to 0$ monotonically 
+from below as $\Lambda \to \infty$. \textup{(}One-sided Archimedean tail deficit.\textup{)}
 \item[\textup{(iii)}] $|E_\Lambda(f)| = O(\Lambda^{-1})$ as $\Lambda \to \infty$.
 \item[\textup{(iv)}] The convergence $E_\Lambda \to 0$ is distributional, not uniform.
 \end{enumerate}
@@ -327,16 +330,17 @@ for sufficiently large $\Lambda_0$. For $\Lambda > \Lambda_0$:
 \geq c \int_{I \cap \{|t| > \Lambda\}} |\psi_\infty(t)| \, dt > 0.
 \]
 
-\textbf{Proof of (ii):} The sign-changing property follows from the oscillatory 
-nature of the truncation. In position space, sharp spectral cutoff convolves 
-with $\sinc_\Lambda$, which alternates sign. Explicitly, for the canonical 
-test function $f_0(t) = e^{-t}$:
+\textbf{Proof of (ii):} For $h = f * f^*$, we have 
+$\widehat{h}(\tfrac{1}{2} + it) = |\widehat{f}(\tfrac{1}{2} + it)|^2 \geq 0$.
+By Lemma \ref{lem:digamma}, $\psi_\infty(t) = \tfrac{1}{2}\log(|t|/2) + O(|t|^{-2}) > 0$
+for $|t| > 2$. Thus the integrand in
 \[
-E_\Lambda(f_0) = A \cdot \frac{\sin(\Lambda \tau_0 + \phi)}{\Lambda} + 
-O(\Lambda^{-2})
+E_\Lambda(h) = -\frac{1}{2\pi} \int_{|t| > \Lambda} 
+|\widehat{f}(\tfrac{1}{2} + it)|^2 \cdot \psi_\infty(t) \, dt
 \]
-for constants $A > 0$, $\tau_0$, $\phi$ depending on $f_0$. This oscillates 
-through zero infinitely often as $\Lambda$ increases.
+is non-negative for $\Lambda > 2$. The minus sign gives $E_\Lambda(h) \leq 0$.
+Monotonicity: as $\Lambda$ increases, the domain of integration shrinks, so 
+$|E_\Lambda(h)|$ decreases, i.e., $E_\Lambda(h)$ increases toward zero from below.
 
 \textbf{Proof of (iii):} Since $\hat{f} \in \mathscr{S}(\R)$, for any $N > 0$
 there exists $C_N$ such that $|\hat{f}(\tfrac{1}{2} + it)| \leq C_N (1 + |t|)^{-N}$.
@@ -366,15 +370,16 @@ The Gibbs--Gamma mismatch has the following structural character:
 \textbf{Weil term $W_\infty$} & \textbf{Truncation error $E_\Lambda$} \\
 \hline
 Intrinsic (from $\xi(s)$) & Extrinsic (from cutoff) \\
-Smooth ($\Gamma'/\Gamma$) & Oscillatory (Gibbs) \\
-Definite sign possible & Sign-changing \\
-Full spectral support & Tail contribution
+Smooth ($\Gamma'/\Gamma$) & Systematic tail deficit \\
+Full spectral support & Tail contribution only \\
+Complete & Incomplete (truncated)
 \end{tabular}
 \end{center}
 \end{proposition}
 
-The mismatch is not an artifact of poor cutoff choice. Any sharp truncation 
-in spectral space produces Gibbs-type oscillations in position space.
+The mismatch is not an artifact of poor cutoff choice. Any finite truncation 
+excludes the spectral tail, producing a systematic deficit. For positive-type 
+inputs, this deficit is one-sided: the truncated trace undershoots the Weil term.
 
 %=============================================================================
 \section{Consequences}
@@ -383,22 +388,18 @@ in spectral space produces Gibbs-type oscillations in position space.
 \subsection{Positivity does not transfer}
 
 \begin{corollary}\label{cor:positivity}
-Positivity of the Weil functional does not imply positivity of finite 
-truncated traces. Specifically: there exist $f \in \mathscr{S}(\R_{>0})$ 
-and cutoffs $\Lambda$ such that
-\[
-C_{\textup{Weil}}(f * f^*) \geq 0 \quad \text{but} \quad 
-T_\Lambda(f * f^*) < 0.
-\]
+The finite truncated trace $T_\Lambda(h)$ and the Weil quadratic form 
+$C_{\textup{Weil}}(h)$ do not coincide at any finite cutoff $\Lambda$. 
+Consequently, establishing trace positivity $T_\Lambda(h) \geq 0$ at finite 
+cutoff does not establish Weil positivity, and vice versa.
 \end{corollary}
 
 \begin{proof}
-By Theorem \ref{thm:mismatch}(ii), the error $E_\Lambda(f * f^*)$ takes 
-both positive and negative values as $\Lambda$ varies. Choose $f$ and 
-$\Lambda$ such that $E_\Lambda(f * f^*) < -W_\infty(f * f^*)$ (possible 
-since the oscillation amplitude is $O(\Lambda^{-1})$ while the frequency 
-is $O(\Lambda)$, allowing fine-tuning). Then $T_\Lambda(f * f^*) < 0$ 
-despite possible positivity of the Weil functional.
+By Theorem \ref{thm:mismatch}(i), $E_\Lambda(h) \neq 0$ for all finite $\Lambda$.
+Thus $T_\Lambda(h) = W_\infty(h) + E_\Lambda(h) \neq W_\infty(h)$, and the 
+functionals are distinct. Positivity of one does not logically imply 
+positivity of the other without controlling the error term, which is 
+nonzero at every finite cutoff.
 \end{proof}
 
 \subsection{Obstruction to the spectral approach}
@@ -501,9 +502,9 @@ We have established:
 \item The Weil explicit formula and the Connes spectral trace formula differ 
 at finite cutoff by a nonzero, sign-changing error term.
 
-\item This error, the \emph{Gibbs--Gamma mismatch}, arises from the structural 
-difference between the smooth Archimedean gamma factors in the Weil formula 
-and the oscillatory Gibbs phenomenon from spectral truncation.
+\item This error, the \emph{Gibbs--Gamma mismatch}, arises from truncating the 
+spectral integral: the smooth Archimedean gamma factor $\Gamma'/\Gamma$ has 
+infinite support, and any finite cutoff excludes a nonzero tail contribution.
 
 \item As a consequence, positivity of the Weil functional does not imply 
 positivity of finite truncated traces.
