@@ -87,9 +87,10 @@ $\hat{f}$ not identically zero:
 \[
 T_\Lambda(f) = W_\infty(f) + E_\Lambda(f)
 \]
-where the error term $E_\Lambda(f) \neq 0$ for all finite $\Lambda$. For 
-positive-type inputs $h = f * f^*$, the error satisfies $E_\Lambda(h) \leq 0$: 
-the truncated trace systematically undershoots the Weil term.
+where the error term $E_\Lambda(f)$ is generically nonzero. For 
+positive-type inputs $h = f * f^*$, the error satisfies $E_\Lambda(h) \leq 0$ 
+for all sufficiently large $\Lambda$: the truncated trace systematically 
+undershoots the Weil term.
 \end{theorem}
 
 The term $E_\Lambda(f)$ arises from truncating the spectral integral at finite 
@@ -288,7 +289,9 @@ T_\Lambda(f) = W_\infty(f) + E_\Lambda(f)
 \]
 where the error term has the following properties:
 \begin{enumerate}
-\item[\textup{(i)}] $E_\Lambda(f) \neq 0$ for all finite $\Lambda > 0$.
+\item[\textup{(i)}] If $\hat{f}(\tfrac{1}{2} + it)$ has unbounded support 
+\textup{(}i.e., is nonzero for arbitrarily large $|t|$\textup{)}, then 
+$E_\Lambda(f) \neq 0$ for all sufficiently large $\Lambda$.
 \item[\textup{(ii)}] For positive-type inputs $h = f * f^*$, the error $E_\Lambda(h) \leq 0$ 
 for all sufficiently large $\Lambda$, and $E_\Lambda(h) \to 0$ monotonically 
 from below as $\Lambda \to \infty$. \textup{(}One-sided Archimedean tail deficit.\textup{)}
@@ -320,16 +323,18 @@ E_\Lambda(f) = -\frac{1}{2\pi} \int_{|t| > \Lambda}
 \psi_\infty(t) \, dt.
 \]
 
-\textbf{Proof of (i):} By the Stirling expansion (Lemma \ref{lem:digamma} below),
-$\psi_\infty(t) = \tfrac{1}{2}\log(|t|/2) + O(|t|^{-1})$ as $|t| \to \infty$.
-Since $\hat{f}(\tfrac{1}{2} + it) \in \mathscr{S}(\R)$ is not identically zero,
-there exists $t_0$ with $|\hat{f}(\tfrac{1}{2} + it_0)| > 0$. By continuity,
-$|\hat{f}(\tfrac{1}{2} + it)| \geq c > 0$ on some interval $I \subset \{|t| > \Lambda_0\}$
-for sufficiently large $\Lambda_0$. For $\Lambda > \Lambda_0$:
+\textbf{Proof of (i):} Assume $\hat{f}(\tfrac{1}{2} + it)$ has unbounded support.
+By the Stirling expansion (Lemma \ref{lem:digamma} below),
+$\psi_\infty(t) = \tfrac{1}{2}\log(|t|/2) + O(|t|^{-1}) > 0$ for $|t| > 2$.
+Since $\hat{f}(\tfrac{1}{2} + it)$ is nonzero for arbitrarily large $|t|$,
+there exists $\Lambda_0$ and an interval $I \subset \{|t| > \Lambda_0\}$ with
+$|\hat{f}(\tfrac{1}{2} + it)| \geq c > 0$ on $I$. For $\Lambda > \Lambda_0$
+such that $I \cap \{|t| > \Lambda\} \neq \emptyset$:
 \[
 \left| \int_{|t| > \Lambda} \hat{f}(\tfrac{1}{2} + it) \psi_\infty(t) \, dt \right|
-\geq c \int_{I \cap \{|t| > \Lambda\}} |\psi_\infty(t)| \, dt > 0.
+\geq c \int_{I \cap \{|t| > \Lambda\}} \psi_\infty(t) \, dt > 0.
 \]
+Thus $E_\Lambda(f) \neq 0$ for all sufficiently large $\Lambda$.
 
 \textbf{Proof of (ii):} For $h = f * f^*$, we have 
 $\widehat{h}(\tfrac{1}{2} + it) = |\widehat{f}(\tfrac{1}{2} + it)|^2 \geq 0$.
@@ -415,8 +420,10 @@ C_{\textup{Weil}}(h) = (\text{other terms}) - W_\infty(h)
 Since $T_\Lambda(h) = W_\infty(h) + E_\Lambda(h) \leq W_\infty(h)$, we have 
 $-T_\Lambda(h) \geq -W_\infty(h)$, hence $C_\Lambda(h) \geq C_{\textup{Weil}}(h)$.
 
-For (b): the gap $C_\Lambda(h) - C_{\textup{Weil}}(h) = -E_\Lambda(h) > 0$ is 
-nonzero by Theorem \ref{thm:mismatch}(i), so there exist $h$ with 
+For (b): since $h = f * f^*$ with generic $f$ satisfies the hypothesis of 
+Theorem \ref{thm:mismatch}(i), we have $E_\Lambda(h) \neq 0$ for large $\Lambda$.
+Thus the gap $C_\Lambda(h) - C_{\textup{Weil}}(h) = -E_\Lambda(h) > 0$ is 
+nonzero, so there exist $h$ with 
 $C_{\textup{Weil}}(h) < 0 < C_\Lambda(h)$ for appropriate $\Lambda$.
 \end{proof}
 
