@@ -87,8 +87,9 @@ $\hat{f}$ not identically zero:
 \[
 T_\Lambda(f) = W_\infty(f) + E_\Lambda(f)
 \]
-where the error term $E_\Lambda(f) \neq 0$ for all finite $\Lambda$, and 
-$E_\Lambda(f)$ is sign-changing as a function of $\Lambda$.
+where the error term $E_\Lambda(f) \neq 0$ for all finite $\Lambda$. For 
+positive-type inputs $h = f * f^*$, the error satisfies $E_\Lambda(h) \leq 0$: 
+the truncated trace systematically undershoots the Weil term.
 \end{theorem}
 
 The term $E_\Lambda(f)$ arises from truncating the spectral integral at finite 
@@ -385,33 +386,51 @@ inputs, this deficit is one-sided: the truncated trace undershoots the Weil term
 \section{Consequences}
 %=============================================================================
 
-\subsection{Positivity does not transfer}
+\subsection{One-way implication: truncation overestimates positivity}
 
-\begin{corollary}\label{cor:positivity}
-The finite truncated trace $T_\Lambda(h)$ and the Weil quadratic form 
-$C_{\textup{Weil}}(h)$ do not coincide at any finite cutoff $\Lambda$. 
-Consequently, establishing trace positivity $T_\Lambda(h) \geq 0$ at finite 
-cutoff does not establish Weil positivity, and vice versa.
+\begin{corollary}[False positives]\label{cor:positivity}
+For positive-type inputs $h = f * f^*$, the truncated functional overestimates 
+the Weil functional:
+\[
+C_\Lambda(h) \geq C_{\textup{Weil}}(h).
+\]
+In particular:
+\begin{enumerate}
+\item[\textup{(a)}] $C_{\textup{Weil}}(h) \geq 0 \Rightarrow C_\Lambda(h) \geq 0$.
+\item[\textup{(b)}] The converse fails: $C_\Lambda(h) \geq 0$ does not imply 
+$C_{\textup{Weil}}(h) \geq 0$.
+\end{enumerate}
+Truncated positivity is a weaker condition that may produce false positives.
 \end{corollary}
 
 \begin{proof}
-By Theorem \ref{thm:mismatch}(i), $E_\Lambda(h) \neq 0$ for all finite $\Lambda$.
-Thus $T_\Lambda(h) = W_\infty(h) + E_\Lambda(h) \neq W_\infty(h)$, and the 
-functionals are distinct. Positivity of one does not logically imply 
-positivity of the other without controlling the error term, which is 
-nonzero at every finite cutoff.
+By Theorem \ref{thm:mismatch}(ii), $E_\Lambda(h) \leq 0$ for $h = f * f^*$ and 
+sufficiently large $\Lambda$. Writing the explicit formula contributions:
+\[
+C_\Lambda(h) = (\text{spectral sum})_\Lambda = (\text{other terms}) - T_\Lambda(h)
+\]
+\[
+C_{\textup{Weil}}(h) = (\text{other terms}) - W_\infty(h)
+\]
+Since $T_\Lambda(h) = W_\infty(h) + E_\Lambda(h) \leq W_\infty(h)$, we have 
+$-T_\Lambda(h) \geq -W_\infty(h)$, hence $C_\Lambda(h) \geq C_{\textup{Weil}}(h)$.
+
+For (b): the gap $C_\Lambda(h) - C_{\textup{Weil}}(h) = -E_\Lambda(h) > 0$ is 
+nonzero by Theorem \ref{thm:mismatch}(i), so there exist $h$ with 
+$C_{\textup{Weil}}(h) < 0 < C_\Lambda(h)$ for appropriate $\Lambda$.
 \end{proof}
 
 \subsection{Obstruction to the spectral approach}
 
 \begin{corollary}\label{cor:obstruction}
-Any proof of the Riemann hypothesis via the Connes program that relies on:
+Any proof of the Riemann hypothesis via the Connes program that proceeds by:
 \begin{enumerate}
-\item[\textup{(a)}] establishing trace positivity $\Tr_\Lambda(f * f^*) \geq 0$ 
+\item[\textup{(a)}] establishing trace positivity $C_\Lambda(f * f^*) \geq 0$ 
 at finite cutoff, then
-\item[\textup{(b)}] taking $\Lambda \to \infty$,
+\item[\textup{(b)}] concluding Weil positivity $C_{\textup{Weil}}(f * f^*) \geq 0$,
 \end{enumerate}
-is obstructed. Step (a) does not hold uniformly.
+is obstructed. By Corollary \ref{cor:positivity}, (a) is strictly weaker than (b): 
+finite-cutoff positivity overestimates the Weil functional, so it cannot establish RH.
 \end{corollary}
 
 \subsection{Quantum chaos heuristics}
@@ -500,14 +519,16 @@ We have established:
 
 \begin{enumerate}
 \item The Weil explicit formula and the Connes spectral trace formula differ 
-at finite cutoff by a nonzero, sign-changing error term.
+at finite cutoff by a nonzero error term. For positive-type inputs, this error 
+is one-sided: the truncated trace undershoots the Weil term.
 
 \item This error, the \emph{Gibbs--Gamma mismatch}, arises from truncating the 
 spectral integral: the smooth Archimedean gamma factor $\Gamma'/\Gamma$ has 
 infinite support, and any finite cutoff excludes a nonzero tail contribution.
 
-\item As a consequence, positivity of the Weil functional does not imply 
-positivity of finite truncated traces.
+\item As a consequence, finite-cutoff trace positivity overestimates Weil 
+positivity. Truncated positivity cannot establish RH because it is too weak 
+a condition---it admits false positives.
 
 \item This obstructs proof strategies for the Riemann hypothesis that proceed 
 via finite-cutoff trace positivity.
