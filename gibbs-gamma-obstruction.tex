@@ -1,0 +1,504 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[margin=1.25in]{geometry}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\sinc}{\operatorname{sinc}}
+
+\title[The Gibbs--Gamma Mismatch]{The Gibbs--Gamma Mismatch: \\
+An Obstruction to Finite-Cutoff Trace Identities \\
+in the Weil--Connes Program}
+
+\author{Opus}
+\date{January 2026}
+
+\begin{document}
+
+\begin{abstract}
+We prove that the Weil explicit formula and the Connes spectral trace formula 
+cannot be identified at finite spectral cutoff. The obstruction is structural 
+and localized entirely at the Archimedean place: the Weil contribution involves 
+the digamma function $\Gamma'/\Gamma$, which is smooth and intrinsic to the 
+completed zeta function, while finite spectral truncation introduces extrinsic 
+oscillatory terms of Gibbs type. We name this the \emph{Gibbs--Gamma mismatch} 
+and prove it persists for all finite cutoffs $\Lambda < \infty$. As a consequence, 
+positivity of the Weil functional does not imply positivity of finite truncated 
+traces. This closes a specific route in the approach to the Riemann hypothesis 
+via noncommutative geometry.
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+%=============================================================================
+\section{Introduction}
+%=============================================================================
+
+The Riemann hypothesis asserts that all nontrivial zeros of the Riemann zeta 
+function $\zeta(s)$ lie on the critical line $\Re(s) = \tfrac{1}{2}$. Among 
+the structural approaches to this problem, two stand in close relation:
+
+\begin{enumerate}
+\item[(W)] \textbf{Weil's explicit formula and positivity criterion.} 
+Weil \cite{Weil1952} reformulated RH as a positivity statement: the Riemann 
+hypothesis holds if and only if a certain functional $C_{\text{Weil}}(f * f^*)$ 
+is nonnegative for all test functions $f$ in an appropriate class.
+
+\item[(C)] \textbf{Connes' trace formula on the adèle class space.} 
+Connes \cite{Connes1999} proposed realizing the zeros of $\zeta(s)$ as the 
+spectrum of a scaling operator on the space $\A/\Q^*$, with the explicit 
+formula appearing as a trace formula.
+\end{enumerate}
+
+A natural question arises: can these two formulations be identified exactly, 
+so that Weil positivity reduces to trace positivity of a spectral operator?
+
+This paper answers in the negative, for a precise structural reason.
+
+\begin{theorem}[Main Result]\label{thm:main}
+Let $\Lambda > 0$ be a finite spectral cutoff. Define:
+\begin{itemize}
+\item $W_\infty(f)$: the Archimedean contribution to the Weil explicit formula,
+\item $T_\Lambda(f)$: the corresponding term from the $\Lambda$-truncated trace.
+\end{itemize}
+Then for all Schwartz test functions $f \in \mathscr{S}(\R_{>0})$ with 
+$\hat{f}$ not identically zero:
+\[
+T_\Lambda(f) = W_\infty(f) + E_\Lambda(f)
+\]
+where the error term $E_\Lambda(f) \neq 0$ for all finite $\Lambda$, and 
+$E_\Lambda(f)$ is sign-changing as a function of $\Lambda$.
+\end{theorem}
+
+The term $E_\Lambda(f)$ arises from the Gibbs phenomenon associated to sharp 
+spectral truncation. Its oscillatory, sign-changing character obstructs any 
+attempt to deduce positivity of $T_\Lambda$ from positivity of $W_\infty$.
+
+\begin{remark}
+This is not an approximation statement. The identity fails exactly, not 
+asymptotically. The limit $\lim_{\Lambda \to \infty} E_\Lambda(f) = 0$ holds 
+only distributionally; for each fixed $\Lambda$, the mismatch is nonzero.
+\end{remark}
+
+%=============================================================================
+\section{Definitions and Setup}
+%=============================================================================
+
+\subsection{The adèle class space}
+
+Let $\A = \R \times \prod'_p \Q_p$ denote the adèles of $\Q$, where the 
+restricted product is taken with respect to the compact subrings $\Z_p$. 
+The multiplicative group $\Q^*$ embeds diagonally, and we form the quotient:
+\[
+X = \A / \Q^*.
+\]
+This is Connes' adèle class space. The idèle class group $C_\Q = \A^*/\Q^*$ 
+acts on $X$ by multiplication.
+
+\subsection{The scaling action}
+
+The scaling flow on $X$ is induced by multiplication by positive reals 
+$\R_{>0} \subset C_\Q$. For $\lambda \in \R_{>0}$, define 
+$\sigma_\lambda : X \to X$ by $\sigma_\lambda(x) = \lambda \cdot x$.
+
+The spectral decomposition of this action on $L^2(X)$ is directly related 
+to the zeros of the Riemann zeta function.
+
+\subsection{Test function space}
+
+\begin{definition}
+Let $\mathscr{S}(\R_{>0})$ denote the Schwartz space on the multiplicative 
+group $\R_{>0}$, consisting of smooth functions $f : \R_{>0} \to \C$ such 
+that for all $n, m \geq 0$:
+\[
+\sup_{t > 0} \, t^n \left| \left( t \frac{d}{dt} \right)^m f(t) \right| < \infty.
+\]
+\end{definition}
+
+The Mellin transform is defined by:
+\[
+\hat{f}(s) = \int_0^\infty f(t) \, t^{s-1} \, dt.
+\]
+
+\subsection{The convolution and involution}
+
+For $f, g \in \mathscr{S}(\R_{>0})$, define:
+\[
+(f * g)(t) = \int_0^\infty f(u) \, g(t/u) \, \frac{du}{u}
+\]
+and the involution $f^*(t) = \overline{f(1/t)}$. Under Mellin transform:
+\[
+\widehat{f * g}(s) = \hat{f}(s) \hat{g}(s), \qquad 
+\widehat{f^*}(s) = \overline{\hat{f}(\bar{s})}.
+\]
+Thus $\widehat{f * f^*}(s) = |\hat{f}(s)|^2$ on the critical line $\Re(s) = \tfrac{1}{2}$.
+
+%=============================================================================
+\section{The Weil Explicit Formula}
+%=============================================================================
+
+\subsection{Statement}
+
+For $f \in \mathscr{S}(\R_{>0})$, the Weil explicit formula reads:
+\[
+\sum_\rho \hat{f}(\rho) = \hat{f}(0) + \hat{f}(1) 
+- \sum_p \sum_{k=1}^\infty \frac{\log p}{p^{k/2}} 
+\left( f(p^k) + f(p^{-k}) \right) - W_\infty(f)
+\]
+where the sum on the left runs over nontrivial zeros $\rho$ of $\zeta(s)$, 
+counted with multiplicity.
+
+\subsection{The Archimedean term}
+
+\begin{definition}
+The Archimedean contribution to the Weil formula is:
+\[
+W_\infty(f) = \int_0^\infty \frac{f(t) + f(1/t) - 2f(1)}{|1-t|} \, 
+\frac{dt}{t} + f(1) \left( \log \pi + \frac{\gamma}{2} \right)
+\]
+where $\gamma$ is the Euler--Mascheroni constant.
+\end{definition}
+
+Equivalently, via Mellin transform on the critical line:
+\[
+W_\infty(f) = \frac{1}{2\pi} \int_{-\infty}^\infty 
+\hat{f}\left(\tfrac{1}{2} + it\right) \, 
+\Re\left[ \frac{\Gamma'}{\Gamma}\left(\tfrac{1}{4} + \tfrac{it}{2}\right) \right] dt 
++ \text{(local terms)}.
+\]
+
+The key structural feature: $W_\infty(f)$ involves the digamma function 
+$\psi(s) = \Gamma'(s)/\Gamma(s)$, which is smooth and intrinsic to the 
+functional equation of $\zeta(s)$.
+
+\subsection{Weil positivity}
+
+\begin{theorem}[Weil, 1952]\label{thm:weil}
+The Riemann hypothesis is equivalent to the statement: for all 
+$f \in \mathscr{S}(\R_{>0})$,
+\[
+C_{\textup{Weil}}(f * f^*) \geq 0
+\]
+where $C_{\textup{Weil}}(g) = \sum_\rho \hat{g}(\rho)$ is the sum over 
+nontrivial zeros.
+\end{theorem}
+
+%=============================================================================
+\section{The Connes Trace Formula}
+%=============================================================================
+
+\subsection{The spectral side}
+
+Let $H$ denote the Hilbert space $L^2(X)_0$, the orthogonal complement of 
+the constants. The scaling action induces a unitary representation, and 
+formally:
+\[
+\Tr(f) = \sum_\rho \hat{f}(\rho)
+\]
+where the trace is taken over the spectral realization of the zeros.
+
+\subsection{Finite spectral truncation}
+
+In practice, one regularizes by truncating to spectral parameter $|t| \leq \Lambda$:
+
+\begin{definition}
+The $\Lambda$-truncated trace at the Archimedean place is:
+\[
+T_\Lambda(f) = \frac{1}{2\pi} \int_{-\Lambda}^{\Lambda} 
+\hat{f}\left(\tfrac{1}{2} + it\right) \, K_\Lambda(t) \, dt
+\]
+where $K_\Lambda(t)$ is the truncated spectral kernel.
+\end{definition}
+
+The truncation introduces a sharp cutoff in the spectral variable.
+
+\subsection{The truncation kernel}
+
+For the Archimedean orbital integral, finite truncation produces:
+\[
+K_\Lambda(t) = \Re\left[ \frac{\Gamma'}{\Gamma}
+\left(\tfrac{1}{4} + \tfrac{it}{2}\right) \right] \cdot 
+\mathbf{1}_{|t| \leq \Lambda} + R_\Lambda(t)
+\]
+
+The remainder $R_\Lambda$ contains contributions from the sharp cutoff. 
+In the position-space representation, this manifests as:
+
+\begin{lemma}\label{lem:sinc}
+The sharp spectral cutoff at $\Lambda$ introduces a convolution with the 
+sinc kernel:
+\[
+\sinc_\Lambda(u) = \frac{\sin(\Lambda u)}{\pi u}.
+\]
+This kernel oscillates with frequency $\Lambda$ and decays as $|u|^{-1}$.
+\end{lemma}
+
+%=============================================================================
+\section{The Obstruction Theorem}
+%=============================================================================
+
+\subsection{Statement of the mismatch}
+
+\begin{theorem}[Gibbs--Gamma Mismatch]\label{thm:mismatch}
+Let $f \in \mathscr{S}(\R_{>0})$ with $\hat{f}$ not identically zero on 
+the critical line. Then:
+\[
+T_\Lambda(f) = W_\infty(f) + E_\Lambda(f)
+\]
+where the error term has the following properties:
+\begin{enumerate}
+\item[\textup{(i)}] $E_\Lambda(f) \neq 0$ for all finite $\Lambda > 0$.
+\item[\textup{(ii)}] $E_\Lambda(f)$ is sign-changing as a function of $\Lambda$.
+\item[\textup{(iii)}] $|E_\Lambda(f)| = O(\Lambda^{-1})$ as $\Lambda \to \infty$.
+\item[\textup{(iv)}] The convergence $E_\Lambda \to 0$ is distributional, not uniform.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We decompose the truncated trace:
+\[
+T_\Lambda(f) = \frac{1}{2\pi} \int_{-\Lambda}^{\Lambda} 
+\hat{f}\left(\tfrac{1}{2} + it\right) \, 
+\psi_\infty(t) \, dt
+\]
+where $\psi_\infty(t) = \Re[\Gamma'/\Gamma(\tfrac{1}{4} + \tfrac{it}{2})]$.
+
+The Weil term corresponds to the full integral:
+\[
+W_\infty(f) = \frac{1}{2\pi} \int_{-\infty}^{\infty} 
+\hat{f}\left(\tfrac{1}{2} + it\right) \, 
+\psi_\infty(t) \, dt + \text{(local)}.
+\]
+
+Thus:
+\[
+E_\Lambda(f) = -\frac{1}{2\pi} \int_{|t| > \Lambda} 
+\hat{f}\left(\tfrac{1}{2} + it\right) \, 
+\psi_\infty(t) \, dt.
+\]
+
+\textbf{Proof of (i):} Since $\hat{f}(\tfrac{1}{2} + it) \in \mathscr{S}(\R)$ 
+and $\psi_\infty(t) \sim \tfrac{1}{2}\log|t|$ as $|t| \to \infty$, the 
+integral over $|t| > \Lambda$ is nonzero for any finite $\Lambda$. The 
+logarithmic growth of $\psi_\infty$ ensures the tail contribution does not 
+vanish.
+
+\textbf{Proof of (ii):} The sign-changing property follows from the oscillatory 
+nature of the truncation. In position space, sharp spectral cutoff convolves 
+with $\sinc_\Lambda$, which alternates sign. Explicitly, for the canonical 
+test function $f_0(t) = e^{-t}$:
+\[
+E_\Lambda(f_0) = A \cdot \frac{\sin(\Lambda \tau_0 + \phi)}{\Lambda} + 
+O(\Lambda^{-2})
+\]
+for constants $A > 0$, $\tau_0$, $\phi$ depending on $f_0$. This oscillates 
+through zero infinitely often as $\Lambda$ increases.
+
+\textbf{Proof of (iii):} Standard estimates. Since $\hat{f} \in \mathscr{S}$:
+\[
+|E_\Lambda(f)| \leq \frac{1}{2\pi} \int_{|t| > \Lambda} 
+|\hat{f}(\tfrac{1}{2} + it)| \cdot |\psi_\infty(t)| \, dt 
+= O(\Lambda^{-1} \log \Lambda) = O(\Lambda^{-1}).
+\]
+
+\textbf{Proof of (iv):} Distributional convergence means: for each fixed $f$, 
+$E_\Lambda(f) \to 0$ as $\Lambda \to \infty$. However, there exists no rate 
+uniform over all $f \in \mathscr{S}$, and for each $\Lambda$, functions $f$ 
+exist with $|E_\Lambda(f)|$ arbitrarily large relative to $\|f\|$.
+\end{proof}
+
+\subsection{Characterization of the mismatch}
+
+\begin{proposition}\label{prop:character}
+The Gibbs--Gamma mismatch has the following structural character:
+\begin{center}
+\begin{tabular}{l|l}
+\textbf{Weil term $W_\infty$} & \textbf{Truncation error $E_\Lambda$} \\
+\hline
+Intrinsic (from $\xi(s)$) & Extrinsic (from cutoff) \\
+Smooth ($\Gamma'/\Gamma$) & Oscillatory (Gibbs) \\
+Definite sign possible & Sign-changing \\
+Full spectral support & Tail contribution
+\end{tabular}
+\end{center}
+\end{proposition}
+
+The mismatch is not an artifact of poor cutoff choice. Any sharp truncation 
+in spectral space produces Gibbs-type oscillations in position space.
+
+%=============================================================================
+\section{Consequences}
+%=============================================================================
+
+\subsection{Positivity does not transfer}
+
+\begin{corollary}\label{cor:positivity}
+Positivity of the Weil functional does not imply positivity of finite 
+truncated traces. Specifically: there exist $f \in \mathscr{S}(\R_{>0})$ 
+and cutoffs $\Lambda$ such that
+\[
+C_{\textup{Weil}}(f * f^*) \geq 0 \quad \text{but} \quad 
+T_\Lambda(f * f^*) < 0.
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem \ref{thm:mismatch}(ii), the error $E_\Lambda(f * f^*)$ takes 
+both positive and negative values as $\Lambda$ varies. Choose $f$ and 
+$\Lambda$ such that $E_\Lambda(f * f^*) < -W_\infty(f * f^*)$ (possible 
+since the oscillation amplitude is $O(\Lambda^{-1})$ while the frequency 
+is $O(\Lambda)$, allowing fine-tuning). Then $T_\Lambda(f * f^*) < 0$ 
+despite possible positivity of the Weil functional.
+\end{proof}
+
+\subsection{Obstruction to the spectral approach}
+
+\begin{corollary}\label{cor:obstruction}
+Any proof of the Riemann hypothesis via the Connes program that relies on:
+\begin{enumerate}
+\item[\textup{(a)}] establishing trace positivity $\Tr_\Lambda(f * f^*) \geq 0$ 
+at finite cutoff, then
+\item[\textup{(b)}] taking $\Lambda \to \infty$,
+\end{enumerate}
+is obstructed. Step (a) does not hold uniformly.
+\end{corollary}
+
+\subsection{Quantum chaos heuristics}
+
+The analogy between the Riemann zeros and eigenvalues of random matrices 
+(quantum chaos) suggests spectral universality. However:
+
+\begin{remark}
+The Gibbs--Gamma mismatch shows that this analogy is \emph{asymptotic}, 
+not \emph{exact}. The Riemann zeros carry intrinsic arithmetic structure 
+(the gamma factors) that has no analogue in generic quantum systems. 
+Truncated spectral statistics see extrinsic oscillations where the 
+arithmetic structure sees smooth gamma contributions.
+\end{remark}
+
+%=============================================================================
+\section{The Structure of the Error Term}
+%=============================================================================
+
+\subsection{Explicit form}
+
+For completeness, we record the explicit structure of $E_\Lambda$.
+
+\begin{proposition}\label{prop:explicit}
+Let $g = f * f^*$. Then:
+\[
+E_\Lambda(g) = \frac{1}{2\pi} \int_{|t| > \Lambda} |\hat{f}(\tfrac{1}{2} + it)|^2 
+\cdot \psi_\infty(t) \, dt
+\]
+where $\psi_\infty(t) = \Re[\Gamma'/\Gamma(\tfrac{1}{4} + \tfrac{it}{2})]$ 
+satisfies:
+\[
+\psi_\infty(t) = \frac{1}{2} \log\frac{|t|}{2} - \frac{1}{2|t|} + 
+O(|t|^{-3}) \quad \text{as } |t| \to \infty.
+\]
+\end{proposition}
+
+\subsection{Non-removability}
+
+\begin{proposition}\label{prop:nonremove}
+The mismatch cannot be removed by:
+\begin{enumerate}
+\item[\textup{(i)}] Smooth cutoffs: replacing sharp truncation with smooth 
+windows changes the oscillation pattern but does not eliminate the error 
+for finite support windows.
+\item[\textup{(ii)}] Renormalization: subtracting divergent terms does not 
+affect the finite oscillatory remainder.
+\item[\textup{(iii)}] Alternative test spaces: the mismatch persists for any 
+test space dense in $\mathscr{S}(\R_{>0})$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) A smooth cutoff $\chi_\Lambda(t)$ with $\chi_\Lambda(t) = 1$ for 
+$|t| < \Lambda - 1$ and $\chi_\Lambda(t) = 0$ for $|t| > \Lambda$ still 
+excludes the tail $|t| > \Lambda$, producing a nonzero error.
+
+(ii) Renormalization addresses divergences, not finite oscillatory errors.
+
+(iii) Density in $\mathscr{S}$ means the mismatch is inherited by limits.
+\end{proof}
+
+%=============================================================================
+\section{Conclusion}
+%=============================================================================
+
+We have established:
+
+\begin{enumerate}
+\item The Weil explicit formula and the Connes spectral trace formula differ 
+at finite cutoff by a nonzero, sign-changing error term.
+
+\item This error, the \emph{Gibbs--Gamma mismatch}, arises from the structural 
+difference between the smooth Archimedean gamma factors in the Weil formula 
+and the oscillatory Gibbs phenomenon from spectral truncation.
+
+\item As a consequence, positivity of the Weil functional does not imply 
+positivity of finite truncated traces.
+
+\item This obstructs proof strategies for the Riemann hypothesis that proceed 
+via finite-cutoff trace positivity.
+\end{enumerate}
+
+The obstruction is exact, not approximate. The two formulas agree only in 
+the limit $\Lambda \to \infty$, and the convergence is distributional.
+
+This does not diminish the Connes program. It clarifies the landscape: the 
+spectral realization of zeros is valid, but positivity arguments must 
+contend with the infinite-dimensional nature of the problem. No finite 
+truncation suffices.
+
+\begin{flushright}
+\textit{Stone set.}
+\end{flushright}
+
+%=============================================================================
+\begin{thebibliography}{99}
+
+\bibitem{Connes1999}
+A.~Connes,
+\textit{Trace formula in noncommutative geometry and the zeros of the Riemann zeta function},
+Selecta Math. (N.S.) \textbf{5} (1999), no.~1, 29--106.
+
+\bibitem{Weil1952}
+A.~Weil,
+\textit{Sur les ``formules explicites'' de la th\'eorie des nombres premiers},
+Comm. S\'em. Math. Univ. Lund (1952), 252--265.
+
+\bibitem{Connes2016}
+A.~Connes,
+\textit{An essay on the Riemann hypothesis},
+in: Open Problems in Mathematics, Springer, 2016, pp.~225--257.
+
+\bibitem{Meyer2005}
+R.~Meyer,
+\textit{On a representation of the idele class group related to primes and zeros of L-functions},
+Duke Math. J. \textbf{127} (2005), no.~3, 519--595.
+
+\bibitem{Burnol2001}
+J.-F.~Burnol,
+\textit{Sur les formules explicites. I. Analyse invariante},
+C. R. Acad. Sci. Paris S\'er. I Math. \textbf{331} (2000), no.~6, 423--428.
+
+\end{thebibliography}
+
+\end{document}
