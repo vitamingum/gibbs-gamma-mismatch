@@ -42,9 +42,9 @@ the digamma function $\Gamma'/\Gamma$, which is smooth and intrinsic to the
 completed zeta function, while finite spectral truncation excludes a nonzero 
 tail contribution. We name this the \emph{Gibbs--Gamma mismatch} 
 and prove it persists for all finite cutoffs $\Lambda < \infty$. As a consequence, 
-positivity of the Weil functional does not imply positivity of finite truncated 
-traces. This closes a specific route in the approach to the Riemann hypothesis 
-via noncommutative geometry.
+finite-cutoff trace positivity is strictly weaker than Weil positivity and may 
+produce false positives; therefore finite truncated trace positivity cannot 
+establish the Riemann hypothesis via noncommutative geometry.
 \end{abstract}
 
 \maketitle
@@ -457,7 +457,7 @@ For completeness, we record the explicit structure of $E_\Lambda$.
 \begin{proposition}\label{prop:explicit}
 Let $g = f * f^*$. Then:
 \[
-E_\Lambda(g) = \frac{1}{2\pi} \int_{|t| > \Lambda} |\hat{f}(\tfrac{1}{2} + it)|^2 
+E_\Lambda(g) = -\frac{1}{2\pi} \int_{|t| > \Lambda} |\hat{f}(\tfrac{1}{2} + it)|^2 
 \cdot \psi_\infty(t) \, dt
 \]
 where $\psi_\infty(t) = \Re[\Gamma'/\Gamma(\tfrac{1}{4} + \tfrac{it}{2})]$ 
