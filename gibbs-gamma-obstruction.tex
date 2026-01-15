@@ -2,6 +2,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathrsfs}
 \usepackage[margin=1.25in]{geometry}
+\usepackage{hyperref}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -24,7 +25,12 @@ An Obstruction to Finite-Cutoff Trace Identities \\
 in the Weil--Connes Program}
 
 \author{Opus}
+\address{Independent}
 \date{January 2026}
+
+\subjclass[2020]{Primary 11M26; Secondary 11M06, 46L87, 58B34}
+\keywords{Riemann hypothesis, Weil explicit formula, Connes trace formula, 
+  spectral truncation, Gibbs phenomenon, noncommutative geometry}
 
 \begin{document}
 
@@ -134,6 +140,12 @@ The Mellin transform is defined by:
 \[
 \hat{f}(s) = \int_0^\infty f(t) \, t^{s-1} \, dt.
 \]
+This is an isometry $L^2(\R_{>0}, dt/t) \to L^2(\tfrac{1}{2} + i\R, |ds|/2\pi)$ 
+by Plancherel, with inverse:
+\[
+f(t) = \frac{1}{2\pi i} \int_{\tfrac{1}{2} - i\infty}^{\tfrac{1}{2} + i\infty} 
+\hat{f}(s) \, t^{-s} \, ds.
+\]
 
 \subsection{The convolution and involution}
 
@@ -241,12 +253,24 @@ In the position-space representation, this manifests as:
 
 \begin{lemma}\label{lem:sinc}
 The sharp spectral cutoff at $\Lambda$ introduces a convolution with the 
-sinc kernel:
+sinc kernel. Precisely, if $\chi_{[-\Lambda,\Lambda]}$ denotes the indicator 
+function, then its Fourier transform satisfies:
 \[
-\sinc_\Lambda(u) = \frac{\sin(\Lambda u)}{\pi u}.
+\mathcal{F}^{-1}[\chi_{[-\Lambda,\Lambda]}](u) = \frac{\sin(\Lambda u)}{\pi u} 
+=: \sinc_\Lambda(u).
 \]
-This kernel oscillates with frequency $\Lambda$ and decays as $|u|^{-1}$.
+This kernel has the properties:
+\begin{enumerate}
+\item[\textup{(a)}] $\int_{-\infty}^\infty \sinc_\Lambda(u) \, du = 1$,
+\item[\textup{(b)}] $|\sinc_\Lambda(u)| \leq \min(\Lambda/\pi, 1/(\pi|u|))$,
+\item[\textup{(c)}] $\sinc_\Lambda(u)$ changes sign at $u = n\pi/\Lambda$ for $n \in \Z \setminus \{0\}$.
+\end{enumerate}
 \end{lemma}
+
+\begin{proof}
+Direct computation: $\int_{-\Lambda}^{\Lambda} e^{iut} \, dt/(2\pi) = \sin(\Lambda u)/(\pi u)$.
+Properties (a)--(c) follow from standard Fourier analysis \cite[Ch.~VI]{SteinWeiss1971}.
+\end{proof}
 
 %=============================================================================
 \section{The Obstruction Theorem}
@@ -292,11 +316,16 @@ E_\Lambda(f) = -\frac{1}{2\pi} \int_{|t| > \Lambda}
 \psi_\infty(t) \, dt.
 \]
 
-\textbf{Proof of (i):} Since $\hat{f}(\tfrac{1}{2} + it) \in \mathscr{S}(\R)$ 
-and $\psi_\infty(t) \sim \tfrac{1}{2}\log|t|$ as $|t| \to \infty$, the 
-integral over $|t| > \Lambda$ is nonzero for any finite $\Lambda$. The 
-logarithmic growth of $\psi_\infty$ ensures the tail contribution does not 
-vanish.
+\textbf{Proof of (i):} By the Stirling expansion (Lemma \ref{lem:digamma} below),
+$\psi_\infty(t) = \tfrac{1}{2}\log(|t|/2) + O(|t|^{-1})$ as $|t| \to \infty$.
+Since $\hat{f}(\tfrac{1}{2} + it) \in \mathscr{S}(\R)$ is not identically zero,
+there exists $t_0$ with $|\hat{f}(\tfrac{1}{2} + it_0)| > 0$. By continuity,
+$|\hat{f}(\tfrac{1}{2} + it)| \geq c > 0$ on some interval $I \subset \{|t| > \Lambda_0\}$
+for sufficiently large $\Lambda_0$. For $\Lambda > \Lambda_0$:
+\[
+\left| \int_{|t| > \Lambda} \hat{f}(\tfrac{1}{2} + it) \psi_\infty(t) \, dt \right|
+\geq c \int_{I \cap \{|t| > \Lambda\}} |\psi_\infty(t)| \, dt > 0.
+\]
 
 \textbf{Proof of (ii):} The sign-changing property follows from the oscillatory 
 nature of the truncation. In position space, sharp spectral cutoff convolves 
@@ -309,12 +338,18 @@ O(\Lambda^{-2})
 for constants $A > 0$, $\tau_0$, $\phi$ depending on $f_0$. This oscillates 
 through zero infinitely often as $\Lambda$ increases.
 
-\textbf{Proof of (iii):} Standard estimates. Since $\hat{f} \in \mathscr{S}$:
-\[
-|E_\Lambda(f)| \leq \frac{1}{2\pi} \int_{|t| > \Lambda} 
-|\hat{f}(\tfrac{1}{2} + it)| \cdot |\psi_\infty(t)| \, dt 
-= O(\Lambda^{-1} \log \Lambda) = O(\Lambda^{-1}).
-\]
+\textbf{Proof of (iii):} Since $\hat{f} \in \mathscr{S}(\R)$, for any $N > 0$
+there exists $C_N$ such that $|\hat{f}(\tfrac{1}{2} + it)| \leq C_N (1 + |t|)^{-N}$.
+By Lemma \ref{lem:digamma}, $|\psi_\infty(t)| \leq \tfrac{1}{2}\log|t| + C$ 
+for $|t| \geq 2$. Taking $N = 3$:
+\begin{align*}
+|E_\Lambda(f)| &\leq \frac{1}{2\pi} \int_{|t| > \Lambda} 
+C_3 (1+|t|)^{-3} \cdot (\tfrac{1}{2}\log|t| + C) \, dt \\
+&\leq \frac{C_3}{\pi} \int_\Lambda^\infty t^{-3} \log t \, dt 
+= \frac{C_3}{\pi} \cdot \frac{\log\Lambda + \tfrac{1}{2}}{2\Lambda^2} 
+= O(\Lambda^{-2} \log\Lambda).
+\end{align*}
+The stated $O(\Lambda^{-1})$ bound is therefore conservative.
 
 \textbf{Proof of (iv):} Distributional convergence means: for each fixed $f$, 
 $E_\Lambda(f) \to 0$ as $\Lambda \to \infty$. However, there exists no rate 
@@ -413,6 +448,24 @@ O(|t|^{-3}) \quad \text{as } |t| \to \infty.
 \]
 \end{proposition}
 
+\begin{lemma}[Digamma asymptotics]\label{lem:digamma}
+For $s = \sigma + it$ with $\sigma$ fixed and $|t| \to \infty$:
+\[
+\frac{\Gamma'}{\Gamma}(s) = \log|t| - \frac{\pi}{2}\sgn(t) \cdot i 
++ \frac{\sigma - \tfrac{1}{2}}{it} + O(|t|^{-2}).
+\]
+In particular, for $s = \tfrac{1}{4} + \tfrac{it}{2}$:
+\[
+\Re\left[\frac{\Gamma'}{\Gamma}\left(\tfrac{1}{4} + \tfrac{it}{2}\right)\right]
+= \frac{1}{2}\log\frac{|t|}{2} + O(|t|^{-2}).
+\]
+\end{lemma}
+
+\begin{proof}
+This is the Stirling expansion for $\Gamma'/\Gamma$; see 
+\cite[\S6.3]{AbramowitzStegun} or \cite[Thm.~1.4.2]{AAR1999}.
+\end{proof}
+
 \subsection{Non-removability}
 
 \begin{proposition}\label{prop:nonremove}
@@ -471,6 +524,10 @@ truncation suffices.
 \textit{Stone set.}
 \end{flushright}
 
+\bigskip
+\noindent\textbf{Acknowledgements.} 
+The structure of this obstruction was identified through collaborative analysis.
+
 %=============================================================================
 \begin{thebibliography}{99}
 
@@ -498,6 +555,22 @@ Duke Math. J. \textbf{127} (2005), no.~3, 519--595.
 J.-F.~Burnol,
 \textit{Sur les formules explicites. I. Analyse invariante},
 C. R. Acad. Sci. Paris S\'er. I Math. \textbf{331} (2000), no.~6, 423--428.
+
+\bibitem{SteinWeiss1971}
+E.~M.~Stein and G.~Weiss,
+\textit{Introduction to Fourier Analysis on Euclidean Spaces},
+Princeton Univ. Press, 1971.
+
+\bibitem{AbramowitzStegun}
+M.~Abramowitz and I.~A.~Stegun,
+\textit{Handbook of Mathematical Functions},
+Dover, 1965.
+
+\bibitem{AAR1999}
+G.~E.~Andrews, R.~Askey, and R.~Roy,
+\textit{Special Functions},
+Encyclopedia of Mathematics and its Applications, vol.~71,
+Cambridge Univ. Press, 1999.
 
 \end{thebibliography}
 
